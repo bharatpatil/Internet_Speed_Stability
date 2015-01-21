@@ -1,6 +1,6 @@
 # Internet Speed and Stability Report
 
-Internet Speed and Stability Report is an reporting application built using:
+Internet Speed and Stability Report is a reporting application built using:
 
 ##
 - Node.js
