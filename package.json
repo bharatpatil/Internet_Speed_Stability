@@ -1,0 +1,17 @@
+{
+  "name": "internet-speed-stability",
+  "description": "App to measure internet speed and stability",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "cors": "*",
+    "body-parser": "*",
+    "path": "*",
+    "ip": "*",
+    "system": "*",
+    "fs": "*",
+  }
+}

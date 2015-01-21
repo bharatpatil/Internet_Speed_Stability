@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html ng-app="sampleApp">
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/ng-table.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/highstock.src.js"></script>
+    <script type="text/javascript" src="js/highcharts-ng.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/ng-table.js"></script>
+
+    <style>
+      #divParent 
+      {
+        border: 2px solid lightgrey;
+        overflow:hidden;
+        font-family: Trebuchet MS;
+      }
+
+      #divLeft
+      {
+        float:left;
+        width:50%
+      }
+
+      #divRight
+      {
+        float:right;
+        text-align:right;
+        font-family: Trebuchet MS
+      }
+    </style>
+  </head>
+  
+  <body ng-controller="DataController">
+    <div id="divParent">
+      <p style="font-size:10px; color: lightgrey"> Filters </p>
+      <div id="divLeft">
+        <p style="font-family: Trebuchet MS; padding-left:5px; padding-top:5px"> Select Machine <select style="font-family: Trebuchet MS" ng-change="selectAction()" ng-model="dropDown" ng-options="ip for ip in unique_hostAdd"></select>
+        </p>
+      </div>
+
+      <div id="divRight">
+        <section>
+          <ul class="nav nav-pills">
+            <li ng-class="{active:isSelected('1')}"> <a ng-href ng-click="selectTab('1')"> Last 1 Hour </a> </li>
+            <li ng-class="{active:isSelected('2')}"> <a ng-href ng-click="selectTab('2')"> Today </a>  </li>
+            <li ng-class="{active:isSelected('3')}"> <a ng-href ng-click="selectTab('3')"> Last 3 Days </a> </li>
+            <li ng-class="{active:isSelected('4')}"> <a ng-href ng-click="selectTab('4')"> Last 7 Days </a> </li>
+            <li ng-class="{active:isSelected('5')}"> <a ng-href ng-click="selectTab('5')"> Last 30 Days </a> </li>
+            <li ng-class="{active:isSelected('6')}"> <a ng-href ng-click="selectTab('6')"> Last 60 Days </a> </li>
+            <li ng-class="{active:isSelected('7')}"> <a ng-href ng-click="selectTab('7')"> Last 90 Days </a> </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <div id="divParent" class="list-group">
+      <p style="font-size:10px; color: lightgrey"> Chart Area </p>
+      <highchart id="chart1" config="chartConfig" ></highchart>
+    </div>
+
+    <div id="divParent" class="list-group">
+      <p style="font-size:10px; color: lightgrey"> Load Time For Individual Websites </p>
+      <br>
+      <table ng-table="tableParams" class="table">
+        <thead>
+          <tr>
+            <th colspan="4" style="text-align:center; font-family:Trebuchet MS">Load Time For Individual Websites (milliseconds)</th>
+          </tr>
+          <tr>
+            <th style="text-align:center; font-family:Trebuchet MS" ></th>
+            <th style="text-align:center; font-family:Trebuchet MS" >Min</th>
+            <th style="text-align:center; font-family:Trebuchet MS" >Max</th>
+            <th style="text-align:center; font-family:Trebuchet MS" >Avg</th>
+          </tr>
+
+        <tbody>
+          <tr>
+            <td style="text-align:center; color:#E77471; font-family:Trebuchet MS">Gmail</th>
+            <td style="text-align:center; color:green; font-family:Trebuchet MS">{{gmailData.min}}</th>
+            <td style="text-align:center; color:red; font-family:Trebuchet MS">{{gmailData.max}}</font></th>
+            <td style="text-align:center; color:orange; font-family:Trebuchet MS">{{gmailData.avg}}</th>  
+          </tr>
+          <tr>
+            <td style="text-align:center; color:#3EA055; font-family:Trebuchet MS">Google</th>
+            <td style="text-align:center; color:green; font-family:Trebuchet MS">{{googleData.min}}</th>
+            <td style="text-align:center; color:red; font-family:Trebuchet MS">{{googleData.max}}</font></th>
+            <td style="text-align:center; color:orange; font-family:Trebuchet MS">{{googleData.avg}}</th>  
+          </tr>
+          <tr>
+            <td style="text-align:center; color:#1589FF; font-family:Trebuchet MS">Code</th>
+            <td style="text-align:center; color:green; font-family:Trebuchet MS">{{codeData.min}}</th>
+            <td style="text-align:center; color:red; font-family:Trebuchet MS">{{codeData.max}}</font></th>
+            <td style="text-align:center; color:orange; font-family:Trebuchet MS">{{codeData.avg}}</th>  
+          </tr>
+          <tr>
+            <td style="text-align:center; color:#7D0541; font-family:Trebuchet MS">Review</th>
+            <td style="text-align:center; color:green; font-family:Trebuchet MS">{{reviewData.min}}</th>
+            <td style="text-align:center; color:red; font-family:Trebuchet MS">{{reviewData.max}}</font></th>
+            <td style="text-align:center; color:orange; font-family:Trebuchet MS">{{reviewData.avg}}</th>  
+          </tr>
+          <tr>
+            <td style="text-align:center; color:#657383; font-family:Trebuchet MS">Total</th>
+            <td style="text-align:center; color:green; font-family:Trebuchet MS">{{totalData.min}}</th>
+            <td style="text-align:center; color:red; font-family:Trebuchet MS">{{totalData.max}}</font></th>
+            <td style="text-align:center; color:orange; font-family:Trebuchet MS">{{totalData.avg}}</th>  
+          </tr>
+        </tbody>
+      </table>
+    </div> 
+
+    <div id="divParent">
+      <p style="font-size:10px; color: lightgrey"> Link For Accessing Textual Report </p>
+      <a style="font-family: Trebuchet MS; padding-left:5px" href="dataTable.html"> Full Report </a>
+    </div>
+    <br>
+    <br>
+  </body>
+</html>

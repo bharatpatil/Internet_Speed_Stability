@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="tableApp">
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/ng-table.css">
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/appTable.js"></script>
+    <script type="text/javascript" src="js/ng-table.js"></script>
+  </head>
+  
+  <body ng-controller="TableController as app">
+    <div class="list-group">
+      <table ng-table="tableParams" class="table">
+        <thead>
+          <tr>
+            <th style="text-align:center">IP</th>
+            <th style="text-align:center">HOST</th>
+            <th style="text-align:center">DATE</th>
+            <th style="text-align:center">GMAIL</th>
+            <th style="text-align:center">CODE</th>
+            <th style="text-align:center">REVIEW</th>
+            <th style="text-align:center">GOOGLE</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="detail in app.data | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
+            <td style="text-align:center">{{detail.ip}}</td>
+            <td style="text-align:center">{{detail.host}}</td>
+            <td style="text-align:center">{{detail.date | date : 'MM/dd/yyyy h:mm:ss a'}}</td>
+            <td style="text-align:center">{{detail.gmail}}</td>
+            <td style="text-align:center">{{detail.code}}</td>
+            <td style="text-align:center">{{detail.review}}</td>
+            <td style="text-align:center">{{detail.google}}</td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <td colspan="3">
+            <div class="pagination">
+              <ul>
+                <li ng-class="prevPageDisabled()">
+                  <a href ng-click="prevPage()">« Prev</a>
+                </li>
+                <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                  <a href="#">{{n+1}}</a>
+                </li>
+                <li ng-class="nextPageDisabled()">
+                  <a href ng-click="nextPage()">Next »</a>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tfoot>
+      </table>
+    </div>
+    
+    <!-- <form ng-submit="sendPost()">
+      <input ng-model="newName"/>
+      <button type="submit">Send</button>
+    </form>   -->   
+  </body>
+</html>
