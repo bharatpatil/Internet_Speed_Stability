@@ -1,10 +1,12 @@
 # Internet Speed and Stability Report
 
 Internet Speed and Stability Report is an reporting application built using:
-	- Node.js
-	- Express
-	- MongoDB
-	- Angular.js
+
+##
+- Node.js
+- Express
+- MongoDB
+- Angular.js
 
 ## Installation
 
